@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joey Bridgham | Finance</title>
+<meta name="description" content="Joey Bridgham, MS Finance graduating Summer 2026 from UNCW. Equity research, valuation modeling, and portfolio management.">
+<style>
+:root{
+  --bg:#000;
+  --bg-soft:#0a0a0c;
+  --surface:rgba(255,255,255,.045);
+  --surface-border:rgba(255,255,255,.09);
+  --text:#f5f5f7;
+  --text-dim:#a1a1a6;
+  --text-faint:#6e6e73;
+  --gold:#2997ff;
+  --gold-soft:rgba(41,151,255,.14);
+  --radius:22px;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Times New Roman",Times,Georgia,serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  line-height:1.5;
+}
+::selection{background:var(--gold);color:#000}
+
+/* ---------- NAV ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  background:rgba(0,0,0,.55);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.nav-inner{
+  max-width:1100px;margin:0 auto;padding:0 24px;
+  height:52px;display:flex;align-items:center;justify-content:space-between;
+}
+.nav-name{font-weight:600;font-size:15px;letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{
+  color:var(--text-dim);text-decoration:none;font-size:13px;letter-spacing:.01em;
+  transition:color .25s;
+}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{
+  background:var(--gold);color:#000!important;font-weight:600;
+  padding:6px 16px;border-radius:980px;font-size:13px;
+  transition:transform .25s var(--ease),box-shadow .25s!important;
+}
+.nav-cta:hover{transform:scale(1.04);box-shadow:0 4px 24px rgba(41,151,255,.35)}
+@media(max-width:640px){.nav-links a:not(.nav-cta){display:none}}
+
+/* ---------- HERO ---------- */
+.hero{
+  min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;position:relative;padding:120px 24px 80px;
+  perspective:1000px;
+}
+.hero-bg{
+  position:absolute;inset:0;overflow:hidden;pointer-events:none;
+}
+.hero-bg canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero-bg::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 55% 40% at 50% 40%,rgba(41,151,255,.09),transparent 70%);
+}
+.hero-eyebrow{
+  font-size:14px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:24px;font-weight:500;
+}
+.hero h1{
+  font-size:clamp(48px,9vw,96px);font-weight:700;letter-spacing:-.03em;line-height:1.04;
+  background:linear-gradient(180deg,#fff 30%,#b8b8bd 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  transform-style:preserve-3d;
+}
+.hero-sub{
+  margin-top:24px;font-size:clamp(17px,2.4vw,22px);color:var(--text-dim);
+  max-width:640px;font-weight:400;letter-spacing:-.01em;
+}
+.hero-sub strong{color:var(--text);font-weight:500}
+.hero-btns{margin-top:40px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.btn{
+  text-decoration:none;font-size:16px;font-weight:500;padding:13px 30px;border-radius:980px;
+  transition:transform .3s var(--ease),box-shadow .3s,background .3s;
+  display:inline-block;
+}
+.btn-gold{background:var(--gold);color:#000}
+.btn-gold:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 8px 32px rgba(41,151,255,.4)}
+.btn-ghost{color:var(--text);border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.03)}
+.btn-ghost:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+.hero-meta{
+  margin-top:56px;display:flex;gap:32px;flex-wrap:wrap;justify-content:center;
+  color:var(--text-faint);font-size:14px;
+}
+.hero-meta a{color:var(--text-faint);text-decoration:none;transition:color .25s}
+.hero-meta a:hover{color:var(--gold)}
+.scroll-hint{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  color:var(--text-faint);font-size:22px;animation:bob 2.2s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+/* ---------- SECTIONS ---------- */
+section{max-width:1100px;margin:0 auto;padding:110px 24px}
+.section-eyebrow{
+  font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);
+  font-weight:600;margin-bottom:14px;
+}
+.section-title{
+  font-size:clamp(34px,5.5vw,56px);font-weight:700;letter-spacing:-.025em;line-height:1.08;
+  margin-bottom:18px;
+}
+.section-sub{color:var(--text-dim);font-size:18px;max-width:620px;margin-bottom:56px}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ---------- STATS STRIP ---------- */
+.stats{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;
+  padding-top:0;padding-bottom:0;
+}
+.stat{
+  background:var(--surface);border:1px solid var(--surface-border);border-radius:var(--radius);
+  padding:34px 28px;text-align:center;
+  transition:transform .4s var(--ease),border-color .4s;
+}
+.stat:hover{transform:translateY(-6px);border-color:rgba(41,151,255,.35)}
+.stat-num{font-size:40px;font-weight:700;letter-spacing:-.02em;color:var(--gold)}
+.stat-label{margin-top:6px;color:var(--text-dim);font-size:14px}
+
+/* ---------- PROJECT CARDS (3D tilt) ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:22px}
+.card{
+  background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+  border:1px solid var(--surface-border);border-radius:var(--radius);
+  padding:30px;position:relative;
+  transform-style:preserve-3d;will-change:transform;
+  transition:transform .15s ease-out,border-color .4s,box-shadow .4s;
+  cursor:default;
+}
+.card:hover{border-color:rgba(41,151,255,.4);box-shadow:0 24px 60px rgba(0,0,0,.55),0 0 0 1px rgba(41,151,255,.12)}
+.card-glare{
+  position:absolute;inset:0;border-radius:var(--radius);pointer-events:none;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.08),transparent 45%);
+  opacity:0;transition:opacity .4s;
+}
+.card:hover .card-glare{opacity:1}
+.card-tag{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);
+  font-weight:600;margin-bottom:14px;transform:translateZ(30px);
+}
+.card h3{
+  font-size:21px;font-weight:600;letter-spacing:-.015em;line-height:1.25;margin-bottom:12px;
+  transform:translateZ(40px);
+}
+.card p{color:var(--text-dim);font-size:15px;line-height:1.6;transform:translateZ(20px)}
+.card .chips{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px;transform:translateZ(25px)}
+.chip{
+  font-size:11.5px;color:var(--text-dim);border:1px solid rgba(255,255,255,.12);
+  padding:4px 11px;border-radius:980px;background:rgba(255,255,255,.03);
+}
+.card,.card *{pointer-events:auto}
+.card-link{
+  display:inline-flex;align-items:center;gap:7px;margin-top:20px;
+  font-size:13.5px;font-weight:500;color:var(--gold);text-decoration:none;
+  transform:translateZ(30px);transition:gap .25s var(--ease);
+}
+.card-link:hover{gap:12px}
+
+/* ---------- TIMELINE ---------- */
+.timeline{position:relative;margin-top:8px}
+.timeline::before{
+  content:"";position:absolute;left:7px;top:6px;bottom:6px;width:1px;
+  background:linear-gradient(180deg,var(--gold),rgba(41,151,255,.08));
+}
+.t-item{position:relative;padding:0 0 44px 40px}
+.t-item:last-child{padding-bottom:0}
+.t-item::before{
+  content:"";position:absolute;left:0;top:6px;width:15px;height:15px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--gold);
+  box-shadow:0 0 14px rgba(41,151,255,.45);
+}
+.t-date{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.t-item h3{font-size:20px;font-weight:600;letter-spacing:-.01em;margin-top:6px}
+.t-org{color:var(--text-faint);font-size:14px;margin-top:2px}
+.t-item p{color:var(--text-dim);font-size:15px;line-height:1.65;margin-top:10px;max-width:680px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:72px}
+@media(max-width:860px){.two-col{grid-template-columns:1fr;gap:64px}}
+.col-heading{font-size:24px;font-weight:600;letter-spacing:-.015em;margin-bottom:36px;display:flex;align-items:center;gap:12px}
+.col-heading::before{content:"";width:28px;height:2px;background:var(--gold);display:inline-block}
+
+/* ---------- CERTS ---------- */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.cert{
+  background:var(--surface);border:1px solid var(--surface-border);border-radius:var(--radius);
+  padding:28px;display:flex;gap:18px;align-items:flex-start;
+  transform-style:preserve-3d;will-change:transform;
+  transition:transform .15s ease-out,border-color .4s,box-shadow .4s;
+}
+.cert:hover{border-color:rgba(41,151,255,.4);box-shadow:0 18px 48px rgba(0,0,0,.5)}
+.cert-icon{
+  flex-shrink:0;width:44px;height:44px;border-radius:12px;
+  background:var(--gold-soft);border:1px solid rgba(41,151,255,.25);
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+  transform:translateZ(30px);
+}
+.cert h3{font-size:16.5px;font-weight:600;letter-spacing:-.01em;transform:translateZ(20px)}
+.cert p{color:var(--text-faint);font-size:13.5px;margin-top:4px;transform:translateZ(15px)}
+
+/* ---------- SKILLS ---------- */
+.skill-chips{display:flex;flex-wrap:wrap;gap:11px}
+.skill-chips .chip{font-size:13.5px;padding:9px 18px;color:var(--text-dim);transition:all .3s var(--ease)}
+.skill-chips .chip:hover{color:var(--text);border-color:rgba(41,151,255,.5);background:var(--gold-soft);transform:translateY(-3px)}
+
+/* ---------- CONTACT ---------- */
+.contact{
+  text-align:center;padding-top:130px;padding-bottom:130px;
+}
+.contact .section-title{margin-bottom:14px}
+.contact p{color:var(--text-dim);font-size:18px;max-width:520px;margin:0 auto 40px}
+footer{
+  border-top:1px solid rgba(255,255,255,.07);padding:32px 24px;text-align:center;
+  color:var(--text-faint);font-size:13px;
+}
+footer a{color:var(--text-faint);text-decoration:none}
+footer a:hover{color:var(--gold)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-name" href="#top">Joey Bridgham</a>
+    <div class="nav-links">
+      <a href="#projects">Projects</a>
+      <a href="#case-study">Case Study</a>
+      <a href="#resume">Resume</a>
+      <a href="#certifications">Certifications</a>
+      <a class="nav-cta" href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-bg"><canvas id="stars"></canvas></div>
+  <div class="hero-eyebrow">Finance · Valuation · Equity Research</div>
+  <h1 id="heroTitle">Joey Bridgham</h1>
+  <p class="hero-sub">MS Finance, graduating Summer 2026 from UNCW. Co-managed a $3M live equity portfolio, builds DCF and options pricing models, and turns financial data into investment decisions.</p>
+  <div class="hero-btns">
+    <a class="btn btn-gold" href="#projects">View Projects</a>
+    <a class="btn btn-ghost" href="files/Joey_Bridgham_Resume.docx" download>Download Resume</a>
+    <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+  </div>
+  <div class="hero-meta">
+    <a href="mailto:joeybridgham@gmail.com">joeybridgham@gmail.com</a>
+    <a href="tel:9193328322">919.332.8322</a>
+    <a href="https://www.linkedin.com/in/joeybridgham" target="_blank" rel="noopener">LinkedIn</a>
+    <span>Orlando, FL</span>
+  </div>
+  <div class="scroll-hint">↓</div>
+</header>
+
+<section class="stats reveal" aria-label="Highlights">
+  <div class="stat"><div class="stat-num">13</div><div class="stat-label">Licenses &amp; certifications</div></div>
+  <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Valuation &amp; modeling projects</div></div>
+  <div class="stat"><div class="stat-num">3.6</div><div class="stat-label">Graduate GPA, MS Finance</div></div>
+</section>
+
+<section id="projects">
+  <div class="reveal">
+    <div class="section-eyebrow">Projects</div>
+    <h2 class="section-title">Models built from scratch.</h2>
+    <p class="section-sub">Hands-on valuation and analysis work, from full DCF builds to options pricing, done in Excel and grounded in fundamentals. Every model is downloadable.</p>
+  </div>
+  <div class="grid">
+    <div class="card reveal tilt"><div class="card-glare"></div>
+      <div class="card-tag">DCF Valuation</div>
+      <h3>Denison Mines (DNN) Valuation Model</h3>
+      <p>Full valuation model for Denison Mines Corp, a uranium developer, blending DCF and NAV approaches with comparable company and commodity-pricing analysis.</p>
+      <div class="chips"><span class="chip">DCF</span><span class="chip">NAV Modeling</span><span class="chip">Comps</span><span class="chip">Commodity Pricing</span></div>
+      <a class="card-link" href="files/DNN_Denison_Mines_Valuation_Model.xlsx" download>Download the model →</a>
+    </div>
+    <div class="card reveal tilt"><div class="card-glare"></div>
+      <div class="card-tag">DCF Valuation</div>
+      <h3>SELLAS Life Sciences (SLS) Valuation Model</h3>
+      <p>Comprehensive valuation of a clinical-stage biotech using risk-adjusted NPV (rNPV), DCF, scenario analysis, and M&amp;A framing to capture binary trial outcomes.</p>
+      <div class="chips"><span class="chip">rNPV</span><span class="chip">DCF</span><span class="chip">Scenario Analysis</span><span class="chip">M&amp;A Analysis</span></div>
+      <a class="card-link" href="files/SLS_Sellas_Life_Sciences_Valuation_Model.xlsx" download>Download the model →</a>
+    </div>
+    <div class="card reveal tilt"><div class="card-glare"></div>
+      <div class="card-tag">Options Pricing</div>
+      <h3>META Call Option: BSM &amp; Binomial Model</h3>
+      <p>Priced a 3-month META call option two ways, Black-Scholes and the Binomial Option Pricing Model, including volatility estimation and model comparison.</p>
+      <div class="chips"><span class="chip">Black-Scholes</span><span class="chip">Binomial (BOPM)</span><span class="chip">Volatility</span></div>
+      <a class="card-link" href="files/META_Options_Pricing_Model.xlsx" download>Download the model →</a>
+    </div>
+    <div class="card reveal tilt"><div class="card-glare"></div>
+      <div class="card-tag">Financial Statement Analysis</div>
+      <h3>Ford vs. GM Comparative Analysis</h3>
+      <p>Group-based comparative financial statement analysis of Ford and GM: ratio analysis, trend identification, and head-to-head Excel modeling across both automakers.</p>
+      <div class="chips"><span class="chip">Ratio Analysis</span><span class="chip">Comparative Analysis</span><span class="chip">Excel Modeling</span></div>
+      <a class="card-link" href="files/Ford_GM_Financial_Statement_Analysis.xlsx" download>Download the model →</a>
+    </div>
+    <div class="card reveal tilt"><div class="card-glare"></div>
+      <div class="card-tag">Cost of Capital</div>
+      <h3>Blackstone WACC Analysis</h3>
+      <p>Calculated Blackstone's current weighted average cost of capital using WACC = (E/D+E)Re + (D/D+E)Rd(1−T), with CAPM-derived cost of equity.</p>
+      <div class="chips"><span class="chip">WACC</span><span class="chip">CAPM</span><span class="chip">Cost of Capital</span></div>
+      <a class="card-link" href="files/Blackstone_WACC_Analysis.xlsx" download>Download the model →</a>
+    </div>
+  </div>
+</section>
+
+<section id="case-study">
+  <div class="reveal">
+    <div class="section-eyebrow">Featured Case Study</div>
+    <h2 class="section-title">The Taylor family: a full private wealth plan.</h2>
+    <p class="section-sub">A six-week private wealth engagement (FIN 540, UNCW). The clients: Mark, 65, a newly retired optometrist, and Lisa, 62, a professor retiring within three years. The picture: roughly $3M in investable assets, a $180K annual spending need, a $100K home renovation, 529 funding for three grandchildren, and a donor-advised fund for philanthropy. Every part of the project builds toward one goal: writing and executing an Investment Policy Statement that carries the Taylors through retirement.</p>
+    <div class="hero-btns" style="justify-content:flex-start;margin:0 0 64px">
+      <a class="btn btn-ghost" href="files/Taylor_Family_Case_Study_Brief.docx" download>Case Brief →</a>
+      <a class="btn btn-ghost" href="files/Taylor_Portfolio_Holdings.xlsx" download>Portfolio Holdings →</a>
+    </div>
+  </div>
+  <div class="timeline reveal">
+    <div class="t-item">
+      <div class="t-date">Part 1: The IPS</div>
+      <h3>Foundations &amp; Time Horizon</h3>
+      <div class="t-org">Why the IPS is the cornerstone document</div>
+      <p>Established the IPS as fiduciary communication tool, behavioral discipline, and performance benchmark. Segmented the Taylors' multi-stage time horizon into Lisa's three remaining working years, the gap until Mark claims Social Security at 70, and the long joint retirement beyond, then framed their risk and return objectives around it.</p>
+      <a class="card-link" href="files/Taylor_Part1_IPS_Foundations.pdf" download>Download Part 1 →</a>
+    </div>
+    <div class="t-item">
+      <div class="t-date">Part 2: Capital Market Expectations</div>
+      <h3>Return, Volatility &amp; Correlation Assumptions</h3>
+      <div class="t-org">The inputs that drive everything downstream</div>
+      <p>Built forward-looking return, volatility, and correlation assumptions for the major asset classes using historical data and building-block methodology, cross-checked against institutional forecasts including the J.P. Morgan and AQR 2026 Long-Term Capital Market Assumptions.</p>
+      <a class="card-link" href="files/Taylor_Part2_Capital_Market_Expectations.docx" download>Download Part 2 →</a>
+    </div>
+    <div class="t-item">
+      <div class="t-date">Part 3: Asset Allocation</div>
+      <h3>Efficient Frontier &amp; Recommended Mix</h3>
+      <div class="t-org">Mean-variance optimization, tied back to the IPS</div>
+      <p>Ran Markowitz mean-variance optimization on the capital market expectations to build an efficient frontier, then selected the allocation the IPS pointed to: roughly two-thirds equities and one-third bonds and real assets, squarely inside the risk tolerance both clients identified.</p>
+      <a class="card-link" href="files/Taylor_Part3_Asset_Allocation.docx" download>Download Part 3 →</a>
+    </div>
+    <div class="t-item">
+      <div class="t-date">Part 4: Fund Selection</div>
+      <h3>Implementing Every Sub-Asset Class</h3>
+      <div class="t-org">Specific, low-cost vehicles for each exposure</div>
+      <p>Selected specific ETFs and mutual funds for every sub-asset class in the allocation, screened on expense ratio, index tracking, and qualitative factors, building the portfolio from scratch before considering transition costs.</p>
+      <a class="card-link" href="files/Taylor_Part4_Fund_Selection.docx" download>Download Part 4 →</a>
+    </div>
+    <div class="t-item">
+      <div class="t-date">Part 5: Client Communication</div>
+      <h3>The Client Letter</h3>
+      <div class="t-org">Translating the plan into plain English</div>
+      <p>Wrote the letter previewing the recommendations and addressing the Taylors' fear of market volatility head on: behavioral coaching grounded in market history, plus a stress test showing the plan survives a one-in-one-hundred-year drawdown while staying inside their stated 25% maximum one-year loss.</p>
+      <a class="card-link" href="files/Taylor_Part5_Client_Letter.docx" download>Download Part 5 →</a>
+    </div>
+    <div class="t-item">
+      <div class="t-date">Part 6: Implementation</div>
+      <h3>Transition Plan &amp; Asset Location</h3>
+      <div class="t-org">Final deliverable</div>
+      <p>The closing phase: transitioning from the Taylors' current holdings to the recommended portfolio while weighing embedded capital gains, and locating each asset class in the right account type (taxable, traditional IRA, or Roth) for maximum after-tax wealth.</p>
+    </div>
+  </div>
+</section>
+
+<section id="resume">
+  <div class="reveal">
+    <div class="section-eyebrow">Resume</div>
+    <h2 class="section-title">Experience &amp; education.</h2>
+    <p class="section-sub" style="margin-bottom:28px">Detail-oriented finance graduate with hands-on portfolio management experience and proven Excel proficiency.</p>
+    <a class="btn btn-gold" href="files/Joey_Bridgham_Resume.docx" download style="margin-bottom:64px">Download Resume (.docx)</a>
+  </div>
+  <div class="two-col">
+    <div class="reveal">
+      <div class="col-heading">Finance &amp; Academic</div>
+      <div class="timeline">
+        <div class="t-item">
+          <div class="t-date">Aug 2024 to Dec 2024</div>
+          <h3>Portfolio Manager</h3>
+          <div class="t-org">Student-Managed Investment Fund, UNCW</div>
+          <p>Co-managed a live $3M equity portfolio in a graduate-level investment fund, delivering buy/sell/hold recommendations to a faculty investment committee. Built DCF, comparable company, and precedent transaction models in Excel; conducted fundamental analysis across equity sectors.</p>
+        </div>
+        <div class="t-item">
+          <div class="t-date">Aug 2023 to Dec 2023</div>
+          <h3>Research Initiative Team Member</h3>
+          <div class="t-org">UNCW Blue Economy Stock Index</div>
+          <p>Helped launch UNCW's inaugural Blue Economy Stock Index, an equity benchmark developed with the Cameron School of Business, which is now listed as BLUEECO on Bloomberg terminals. Participated in index construction methodology and company screening.</p>
+        </div>
+      </div>
+      <div class="col-heading" style="margin-top:64px">Education</div>
+      <div class="timeline">
+        <div class="t-item">
+          <div class="t-date">Expected Aug 2026 · GPA 3.6</div>
+          <h3>MS, Finance &amp; Investment Management</h3>
+          <div class="t-org">University of North Carolina Wilmington</div>
+          <p>Graduate focus on portfolio management, corporate valuation, equity research, and advanced trading.</p>
+        </div>
+        <div class="t-item">
+          <div class="t-date">May 2025 · GPA 3.1</div>
+          <h3>BS, Finance</h3>
+          <div class="t-org">University of North Carolina Wilmington</div>
+          <p>Coursework in corporate valuation, equity research, investment analysis, and trading.</p>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="col-heading">Work Experience</div>
+      <div class="timeline">
+        <div class="t-item">
+          <div class="t-date">Apr 2025 to Present</div>
+          <h3>Crew Manager</h3>
+          <div class="t-org">Express Movers</div>
+          <p>Lead and mentor moving crews on residential and commercial jobs; coordinate logistics, schedules, and on-site execution. Own client relationships from booking through completion, including payments and issue resolution.</p>
+        </div>
+        <div class="t-item">
+          <div class="t-date">Jun 2024 to Apr 2025</div>
+          <h3>Mover</h3>
+          <div class="t-org">Express Movers</div>
+          <p>Executed residential and commercial moves as part of a coordinated team.</p>
+        </div>
+        <div class="t-item">
+          <div class="t-date">Jun 2021 to Aug 2023</div>
+          <h3>Aquatics Supervisor</h3>
+          <div class="t-org">Life Time Fitness, Raleigh, NC</div>
+          <p>Supervised the lifeguard team: scheduling, rotations, and performance evaluations. Trained new lifeguards through simulated emergency scenarios; maintained patron safety and regulatory compliance.</p>
+        </div>
+        <div class="t-item">
+          <div class="t-date">Mar 2020 to Jun 2021</div>
+          <h3>Assistant Manager</h3>
+          <div class="t-org">Aquatic Management Group, Cary, NC</div>
+          <p>Mentored new lifeguards, managed pool chemical balance, and responded to patron requests.</p>
+        </div>
+        <div class="t-item">
+          <div class="t-date">Mar 2017 to Mar 2020</div>
+          <h3>Lifeguard</h3>
+          <div class="t-org">Aquatic Management Group, Cary, NC</div>
+          <p>Performed a successful lifesaving rescue. Maintained patron safety and enforced pool regulations.</p>
+        </div>
+      </div>
+      <div class="col-heading" style="margin-top:64px">Involvement</div>
+      <div class="skill-chips">
+        <span class="chip">UNCW Swim Club</span>
+        <span class="chip">Fraternity Treasurer</span>
+        <span class="chip">UNCW Blue Economy Index</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="reveal">
+    <div class="section-eyebrow">Certifications</div>
+    <h2 class="section-title">Credentialed and current.</h2>
+    <p class="section-sub">Industry certifications spanning securities, investment fundamentals, market data, and analytics.</p>
+  </div>
+  <div class="cert-grid">
+    <div class="cert reveal tilt"><div class="cert-icon">🏛️</div><div><h3>Securities Industry Essentials (SIE)</h3><p>FINRA · Nov 2025</p></div></div>
+    <div class="cert reveal tilt"><div class="cert-icon">📈</div><div><h3>Investment Foundations® Certificate</h3><p>CFA Institute · Nov 2025</p></div></div>
+    <div class="cert reveal tilt"><div class="cert-icon">💹</div><div><h3>Bloomberg Market Concepts</h3><p>Bloomberg · Oct 2024</p></div></div>
+    <div class="cert reveal tilt"><div class="cert-icon">📉</div><div><h3>Bloomberg Finance Fundamentals</h3><p>Bloomberg · Dec 2024</p></div></div>
+    <div class="cert reveal tilt"><div class="cert-icon">💼</div><div><h3>Envestnet Institute On Campus</h3><p>Envestnet · Apr 2025</p></div></div>
+    <div class="cert reveal tilt"><div class="cert-icon">📊</div><div><h3>Data Analytics Professional</h3><p>Google</p></div></div>
+    <div class="cert reveal tilt"><div class="cert-icon">🗄️</div><div><h3>Foundations: Data, Data, Everywhere</h3><p>Google · Jun 2026</p></div></div>
+    <div class="cert reveal tilt"><div class="cert-icon">🤖</div><div><h3>AI Fluency Framework &amp; Foundations</h3><p>Anthropic · May 2026</p></div></div>
+    <div class="cert reveal tilt"><div class="cert-icon">🧾</div><div><h3>Corporate Financial Statement Analysis</h3><p>LinkedIn · Nov 2025</p></div></div>
+    <div class="cert reveal tilt"><div class="cert-icon">📐</div><div><h3>Advanced Excel for FP&amp;A</h3><p>LinkedIn · Nov 2025</p></div></div>
+    <div class="cert reveal tilt"><div class="cert-icon">🧮</div><div><h3>Excel Essential Training (Microsoft 365)</h3><p>LinkedIn · Nov 2025</p></div></div>
+    <div class="cert reveal tilt"><div class="cert-icon">⚙️</div><div><h3>Autodesk Inventor Certified Professional</h3><p>Autodesk · Nov 2019</p></div></div>
+    <div class="cert reveal tilt"><div class="cert-icon">🛟</div><div><h3>Lifeguarding with CPR/AED &amp; First Aid</h3><p>American Red Cross</p></div></div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="reveal">
+    <div class="section-eyebrow">Core Competencies</div>
+    <h2 class="section-title">The toolkit.</h2>
+    <p class="section-sub">Financial analysis, modeling, and the software that powers it.</p>
+  </div>
+  <div class="skill-chips reveal">
+    <span class="chip">Financial Modeling</span>
+    <span class="chip">DCF Valuation</span>
+    <span class="chip">Equity Research</span>
+    <span class="chip">Wealth Management</span>
+    <span class="chip">Corporate Valuation</span>
+    <span class="chip">Portfolio Analysis</span>
+    <span class="chip">Financial Statement Analysis</span>
+    <span class="chip">Comparative Analysis</span>
+    <span class="chip">Market Research</span>
+    <span class="chip">Data Analysis</span>
+    <span class="chip">Budget Preparation</span>
+    <span class="chip">Excel: Pivot Tables &amp; Complex Formulas</span>
+    <span class="chip">Bloomberg Terminal</span>
+    <span class="chip">PowerPoint</span>
+    <span class="chip">AI-Assisted Workflows</span>
+  </div>
+</section>
+
+<section class="contact reveal" id="contact">
+  <div class="section-eyebrow">Contact</div>
+  <h2 class="section-title">Let's talk.</h2>
+  <p>Open to roles in wealth management, equity research, and corporate finance. The fastest way to reach me is email.</p>
+  <div class="hero-btns">
+    <a class="btn btn-gold" href="mailto:joeybridgham@gmail.com">Email Me</a>
+    <a class="btn btn-ghost" href="https://www.linkedin.com/in/joeybridgham" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn btn-ghost" href="tel:9193328322">919.332.8322</a>
+  </div>
+</section>
+
+<footer>
+  © 2026 Joey Bridgham · Orlando, FL · <a href="mailto:joeybridgham@gmail.com">joeybridgham@gmail.com</a> · <a href="https://www.linkedin.com/in/joeybridgham" target="_blank" rel="noopener">LinkedIn</a>
+</footer>
+
+<script>
+// Scroll reveal
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// 3D tilt on cards
+const maxTilt = 7;
+document.querySelectorAll('.tilt').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left)/r.width, y = (e.clientY - r.top)/r.height;
+    card.style.transform = `perspective(900px) rotateX(${(0.5-y)*maxTilt}deg) rotateY(${(x-0.5)*maxTilt}deg) translateY(-4px)`;
+    card.style.setProperty('--mx',(x*100)+'%');
+    card.style.setProperty('--my',(y*100)+'%');
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.transform = 'perspective(900px) rotateX(0) rotateY(0) translateY(0)';
+  });
+});
+
+// Subtle hero parallax
+const heroTitle = document.getElementById('heroTitle');
+const heroBg = document.querySelector('.hero-bg');
+window.addEventListener('scroll',()=>{
+  const y = window.scrollY;
+  if(y < window.innerHeight){
+    heroTitle.style.transform = `translateY(${y*0.18}px)`;
+    heroTitle.style.opacity = Math.max(0, 1 - y/(window.innerHeight*0.7));
+    heroBg.style.transform = `translateY(${y*0.3}px)`;
+  }
+},{passive:true});
+
+// 3D starfield — crisp, full native resolution
+(function(){
+  const canvas = document.getElementById('stars');
+  if(!canvas) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ctx = canvas.getContext('2d');
+  let W,H,dpr,stars=[],mx=0,my=0;
+  const N = 5000, DEPTH = 1.6;
+
+  function resize(){
+    dpr = devicePixelRatio || 1;
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = W*dpr; canvas.height = H*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function spawn(z){
+    return {
+      x:(Math.random()*2-1)*DEPTH*1.4,
+      y:(Math.random()*2-1)*DEPTH*1.2,
+      z: z!==undefined ? z : Math.random()*DEPTH+0.05,
+      tw: Math.random()*Math.PI*2,
+      blue: Math.random()<0.3
+    };
+  }
+  function init(){ stars=[]; for(let i=0;i<N;i++) stars.push(spawn()); }
+
+  addEventListener('mousemove',e=>{
+    mx = (e.clientX/innerWidth - .5);
+    my = (e.clientY/innerHeight - .5);
+  },{passive:true});
+
+  let t=0;
+  function frame(){
+    t += 0.016;
+    ctx.clearRect(0,0,W,H);
+    const cx = W/2 + mx*-22, cy = H*0.42 + my*-22;
+    const f = Math.min(W,H)*0.62;
+    for(const s of stars){
+      if(!reduced){
+        s.z -= 0.0011;
+        if(s.z <= 0.05){ Object.assign(s, spawn(DEPTH)); }
+      }
+      const k = f/s.z;
+      const sx = cx + s.x*k*0.5, sy = cy + s.y*k*0.5;
+      if(sx<-10||sx>W+10||sy<-10||sy>H+10) continue;
+      const near = 1 - s.z/DEPTH;
+      const r = 0.5 + near*1.7;
+      const twinkle = reduced ? 1 : 0.7 + 0.3*Math.sin(t*2 + s.tw);
+      const a = (0.28 + near*0.72) * twinkle;
+      ctx.beginPath();
+      ctx.arc(sx,sy,r,0,Math.PI*2);
+      ctx.fillStyle = s.blue ? `rgba(120,180,255,${a})` : `rgba(240,244,255,${a})`;
+      ctx.fill();
+      if(near>0.78){
+        ctx.beginPath();
+        ctx.arc(sx,sy,r*2.6,0,Math.PI*2);
+        ctx.fillStyle = `rgba(41,151,255,${a*0.12})`;
+        ctx.fill();
+      }
+    }
+    if(!reduced) requestAnimationFrame(frame);
+  }
+  addEventListener('resize',()=>{resize();},{passive:true});
+  resize(); init(); frame();
+})();
+</script>
+</body>
+</html>
